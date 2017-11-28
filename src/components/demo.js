@@ -35,14 +35,14 @@ let vpps = cars.map(VPP)
 let max = Math.max(...vpps)
 let rv = R.map(calculateRV, cars)
 
-console.log(cars, vpps, max, rv)
-console.log(rv)
+// console.log(cars, vpps, max, rv)
+// console.log(rv)
 
 let res = R.compose(Math.max(R.map(VPP, )), R.map(calculateVPP, CARS))
 
 compose(calculateRV, calculateVPP)
 
-console.log(res)
+// console.log(res)
 
 
 
@@ -52,16 +52,39 @@ var isLastInStock = function (cars) {
     return R.prop('in_stock', last_car);
 };
 
-var isLastInStock2 = 
 
-console.log(isLastInStock(CARS))
+// console.log(isLastInStock(CARS))
+
+var isLastInStock2 = compose(R.prop('in_stock'), R.last)
+
+// console.log('Exercise 1: ', isLastInStock2(CARS))
+
+var nameOfFirstCar = compose(R.prop('name'), R.head)
+
+// console.log('Exercise 2: ', nameOfFirstCar(CARS))
 
 
+var average = v => R.reduce(R.add, 0, v) / v.length
+
+var averageDV = compose(average, R.map(R.prop('dollar_value')))
 
 
+// console.log('Exercise 3 : ', averageDV(CARS))
+
+var sanitizeName = compose(R.map(R.replace(/\W+/g, '_')), R.map(R.prop('name')))
+
+// console.log('Exercise 4', sanitizeName(CARS))
+// console.log('Exercise 4', compose(R.map(R.replace(/\W+/g, '_')), R.map(R.prop('name')))(CARS) )
 
 
+var availablePrices = compose(R.map(R.prop('dollar_value')) , R.filter(R.prop('in_stock')))
 
+// console.log('Exercise Bonus 1: ', availablePrices(CARS))
+
+
+var fastestCar = compose(R.last, R.sortBy(R.prop('horsepower')))
+
+// console.log('Exercise Bonus 2: ', fastestCar(CARS))
 
 class Demo extends Component {
 
